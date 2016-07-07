@@ -26,10 +26,10 @@ for drugNumber=(9*figure_idx-8):min(9*figure_idx,totalnumber)
     errorbar(barvalue,stderror,'k','LineStyle','none');
  
     
-%%%%%%%%title legend %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%title legend %%%%%%%%%%%%%%%%%%%%%%%%
 xlabel(strcat(drugIdx_name{drugIdx,2}, '(mg/ml)'),'FontName','Times New Roman','FontSize',10);
 set(gca,'xtick',[1 2 3 4 5],'xticklabel',{'control','10^{-1}','10^{-2}','10^{-3}','10^{-4}'});
-ylabel('Cell viability','FontName','Times New Roman','FontSize',10);
+ylabel('Cell Viability','FontName','Times New Roman','FontSize',10);
 set(gca,'ytick',[0.5 1 ]);
 set(gca,'FontName','Times New Roman','FontSize',10,'ticklength',[0 11]);
 set(gca,'FontWeight','bold')
@@ -39,5 +39,19 @@ H2=line([0.5 0.58],[1 1]);
 H1.Color=[0 0 0];
 H2.Color=[0 0 0];
 %box off   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%asterisk%%%%%%%%%%%%%%%%%%%%%%%
+[p,tbl,stats]=anova1(cck_single,[],'off');
+asterisk=multcompare(stats,'display','off');
+
+for pos=1:4
+    sig_val=asterisk(pos,6);
+    if sig_val<0.01
+        H3=text(pos+1,barvalue(pos+1)+0.2,'*');
+        H3.HorizontalAlignment='center';
+        H3.FontSize=14;
+    end
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       
 end
 end
